@@ -2,7 +2,7 @@
 <%= form_with url: @create_order_path, id: 'payment-form', class: "ui form" do |f| %>
 
   <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-
+  <input type="hidden" name="token" />
   <div class="field">
   <%= f.label(:name, "Full Name") %>
   <%= f.text_field :name, id: "name", placeholder: "Your full name e.g. John Doe "%>
@@ -67,17 +67,27 @@
   </div>
   </div>
   
-  <div class="form-row">
-    <label for="card-element">
+  <%# <div class="form-row"> %>
+  <div id="card-number-element" class="field">
+  <input type="tel" name="cardnumber" placeholder="1234 1234 1234 1234">
+  </div>
+  <div id="card-expiry-element" class="field">
+  <input type="tel" name="cardexpiry" placeholder="MM / YY">
+  </div>
+  <div id="card-cvc-element" class="field">
+  <input type="tel" name="cardcvc" placeholder="CVC">
+  </div>
+    <%# <label for="card-element">
       Credit or debit card
     </label>
+    <div class="field">
     <div id="card-element">
       <!-- A Stripe Element will be inserted here. -->
     </div>
-
+    </div> %>
     <!-- Used to display Element errors. -->
     <div id="card-errors" role="alert"></div>
-  </div>
+  <%# </div> %>
 
   <%= f.submit "Submit Order" %>
 <% end %>
@@ -86,33 +96,124 @@
 
 <script>
 var stripe = Stripe('pk_test_Av4EGz2o1zlJ5bgifGjh0cVp');
-var elements = stripe.elements();
+// var elements = stripe.elements();
 
-var style = {
-  base: {
-    fontSize: '16px',
-    color: "#32325d",
+// var style = {
+//   base: {
+//     fontSize: '16px',
+//     color: "#32325d",
+//   },
+  
+// };
+
+// var card = elements.create('card', {style: style});
+
+// card.mount('#card-element');
+
+// Custom Element Styling -------------------------------------------------------
+
+
+  var elements = stripe.elements();
+
+  var style = {
+    base: {
+      iconColor: '#666EE8',
+      color: '#31325F',
+      lineHeight: '40px',
+      fontWeight: 300,
+      fontFamily: 'Helvetica Neue',
+      fontSize: '15px',
+
+      '::placeholder': {
+        color: '#CFD7E0',
+      },
+    },
+  };
+
+  // var elementClasses = {
+  //   focus: 'focus',
+  //   empty: 'empty',
+  //   invalid: 'invalid',
+  // };
+
+  var cardNumberElement = elements.create('cardNumber', {
+    style: style
+  });
+  cardNumberElement.mount('#card-number-element');
+
+  var cardExpiryElement = elements.create('cardExpiry', {
+    style: style
+  });
+  cardExpiryElement.mount('#card-expiry-element');
+
+  var cardCvcElement = elements.create('cardCvc', {
+    style: style
+  });
+  cardCvcElement.mount('#card-cvc-element');
+
+  // registerElements([cardNumber, cardExpiry, cardCvc], 'example3');
+
+// -------------------------------------------------------------------------------------------------
+
+  function setOutcome(result) {
+  var successElement = document.querySelector('.success');
+  var errorElement = document.querySelector('.error');
+  successElement.classList.remove('visible');
+  errorElement.classList.remove('visible');
+
+  if (result.token) {
+    // In this example, we're simply displaying the token
+    // successElement.querySelector('.token').textContent = result.token.id;
+    // successElement.classList.add('visible');
+
+    // In a real integration, you'd submit the form with the token to your backend server
+    var form = document.querySelector('form');
+    form.querySelector('input[name="token"]').setAttribute('value', result.token.id);
+    form.submit();
+  } else if (result.error) {
+    errorElement.textContent = result.error.message;
+    errorElement.classList.add('visible');
   }
-};
+}
 
-var card = elements.create('card', {style: style});
-
-card.mount('#card-element');
-
-card.addEventListener('change', function(event) {
-  var displayError = document.getElementById('card-errors');
-  if (event.error) {
-    displayError.textContent = event.error.message;
-  } else {
-    displayError.textContent = '';
-  }
+cardNumberElement.on('change', function(event) {
+  setOutcome(event);
 });
+
+cardExpiryElement.on('change', function(event) {
+  setOutcome(event);
+});
+
+cardCvcElement.on('change', function(event) {
+  setOutcome(event);
+});
+
+/*document.querySelector('form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var options = {
+    address_zip: document.getElementById('postal-code').value,
+  };
+  stripe.createToken(cardNumberElement, options).then(setOutcome);
+});*/
+
+// -------------------------------------------------------------------------------------------
+
+//  DO NOT EDIT BELOW -----------------------------------------------------------
+
+// card.addEventListener('change', function(event) {
+//   var displayError = document.getElementById('card-errors');
+//   if (event.error) {
+//     displayError.textContent = event.error.message;
+//   } else {
+//     displayError.textContent = '';
+//   }
+// });
 
 var form = document.getElementById('payment-form');
 form.addEventListener('submit', function(event) {
   event.preventDefault();
 
-  stripe.createToken(card).then(function(result) {
+  stripe.createToken(cardNumberElement).then(function(result) {
     if (result.error) {
       var errorElement = document.getElementById('card-errors');
       errorElement.textContent = result.error.message;
@@ -134,11 +235,10 @@ function stripeTokenHandler(token) {
 }
 
 // #############################################################
-$(document).ready(function(){
 
-$('select.dropdown')
-  .dropdown()
-;
+</script>
+<script>
+$(document).ready(function(){
 
 $('.ui.radio.checkbox')
   .checkbox()
