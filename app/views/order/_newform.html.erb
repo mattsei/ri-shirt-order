@@ -1,12 +1,28 @@
-<%= form_with url: @create_order_path, id: 'payment-form' do |f| %>
+<div class="eight wide column bg50b">
+<%= form_with url: @create_order_path, id: 'payment-form', class: "ui form" do |f| %>
 
-<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
 
-<%= f.text_field :name, id: "name", placeholder: "Your full name e.g. John Doe "%>
+  <div class="field">
+  <%= f.label(:name, "Full Name") %>
+  <%= f.text_field :name, id: "name", placeholder: "Your full name e.g. John Doe "%>
+  </div>
+  <div class="field">
+  <%= f.label(:email, "Email Address") %>
   <%= f.email_field :email, data: {stripe: "email"}, placeholder: "e.g. john.doe@gmail.com" %>
-    <%= f.text_field :street_address, id: "street_address", placeholder: "Street address" %>
-    <%= f.text_field :city, id: "city", placeholder: "City" %>
-    <%= f.select :state, options_for_select([
+  </div>
+  <div class="field">
+  <%= f.label(:street_address, "Street Address") %>
+  <%= f.text_field :street_address, id: "street_address", placeholder: "Street address" %>
+  </div>
+  <div class="two fields">
+  <div class="field">
+  <%= f.label(:city, "City") %>
+  <%= f.text_field :city, id: "city", placeholder: "City" %>
+  </div>
+  <div class="field">
+  <%= f.label(:state, "State") %>
+  <%= f.select :state, options_for_select([
       ['ACT', 'ACT'],
       ['NSW', 'NSW'],
       ['NT', 'NT'],
@@ -15,9 +31,16 @@
       ['TAS', 'TAS'],
       ['VIC', 'VIC'],
       ['WA', 'WA'],
-    ]), id: "state" %>
-    
+  ]), id: "state", class: "ui selection dropdown" %>
+  </div>
+  </div>
+  <div class="two fields">
+  <div class="field">
+  <%= f.label(:quantity, "Shirt Quantity") %>
   <%= f.text_field :quantity, id: "quantity" %>
+  </div>
+  <div class="field">
+  <%= f.label(:size, "Size") %>
   <%= f.select :size, options_for_select([
       ['XS', 'XS'],
       ['S', 'S'],
@@ -26,8 +49,24 @@
       ['XL', 'XL'],
       ['2XL', '2XL'],
   ]), id: "size" %>
-<%= f.radio_button(:delivery, "Pickup", id: "delivery") %>
-<%= f.radio_button(:delivery, "Post", id: "delivery") %>
+  </div>
+  </div>
+  <div class="grouped fields">
+  <label for="delivery" style="color:white;">Delivery Method</label><br>
+  <div class="field">
+  <div class="ui radio checkbox">
+  <%= f.label(:delivery, "Pickup") %>
+  <%= f.radio_button(:delivery, "Pickup", id: "delivery") %>
+  </div>
+  </div>
+  <div class="field">
+  <div class="ui radio checkbox">
+  <%= f.label(:delivery, "Post") %>
+  <%= f.radio_button(:delivery, "Post", id: "delivery") %>
+  </div>
+  </div>
+  </div>
+  
   <div class="form-row">
     <label for="card-element">
       Credit or debit card
@@ -42,6 +81,9 @@
 
   <%= f.submit "Submit Order" %>
 <% end %>
+</div>
+<%# ############################################################################################### %>
+
 <script>
 var stripe = Stripe('pk_test_Av4EGz2o1zlJ5bgifGjh0cVp');
 var elements = stripe.elements();
@@ -90,4 +132,17 @@ function stripeTokenHandler(token) {
 
   form.submit();
 }
+
+// #############################################################
+$(document).ready(function(){
+
+$('select.dropdown')
+  .dropdown()
+;
+
+$('.ui.radio.checkbox')
+  .checkbox()
+;
+
+});
 </script>
