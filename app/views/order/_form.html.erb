@@ -1,0 +1,111 @@
+<div class="eight wide column bg50b">
+
+  <form class="ui form">
+    <h4 class="ui dividing header">Order Form</h4>
+    <div class="field">
+      <label>Name</label>
+      <div class="two fields">
+        <div class="field">
+          <input type="text" name="shipping[first-name]" placeholder="First Name">
+        </div>
+        <div class="field">
+          <input type="text" name="shipping[last-name]" placeholder="Last Name">
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Email</label>
+      <div class="field">
+        <input type="email" name="shipping[email]" placeholder="Email">
+      </div>
+    </div>
+    <div class="field">
+      <label>Billing Address</label>
+      <div class="fields">
+        <div class="twelve wide field">
+          <input type="text" name="shipping[address]" placeholder="Street Address">
+        </div>
+        <div class="four wide field">
+          <input type="text" name="shipping[address-2]" placeholder="Postcode">
+        </div>
+      </div>
+    </div>
+    <div class="two fields">
+      <div class="field">
+        <label>City</label>
+        <input type="text" name="city" placeholder="City">
+      </div>
+      <div class="field">
+        <label>State</label>
+        <select class="ui fluid dropdown">
+          <option value="">State</option>
+          <option value="ACT">ACT</option>
+          <option value="NSW">NSW</option>
+          <option value="NT">NT</option>
+          <option value="QLD">QLD</option>
+          <option value="SA">SA</option>
+          <option value="TAS">TAS</option>
+          <option value="VIC">VIC</option>
+          <option value="WA">WA</option>
+        </select>
+      </div>
+    </div>
+    <div class="two fields">
+      <div class="field">
+        <label>Quantity</label>
+        <select class="ui fluid dropdown">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Size</label>
+        <select class="ui fluid dropdown">
+          <option value="xs">xs</option>
+          <option value="s">s</option>
+          <option value="m">m</option>
+          <option value="l">l</option>
+          <option value="xl">xl</option>
+          <option value="2xl">2xl</option>
+        </select>
+      </div>
+    </div>
+    <label>Delivery Method</label>
+    <div class="inline fields">
+
+      <div class="field">
+        <div class="ui radio checkbox">
+          <%= radio_button_tag :delivery, "pickup" %>
+          <label>Pickup</label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui radio checkbox">
+          <%= radio_button_tag :delivery, "post" %>
+          <label>Post</label>
+        </div>
+      </div>
+    </div>
+    <%= form_tag charges_path do %>
+  <article>
+    <% if flash[:error].present? %>
+      <div id="error_explanation">
+        <p><%= flash[:error] %></p>
+      </div>
+    <% end %>
+    <label class="amount">
+      <span><%= @amount.inspect %></span>
+    </label>
+  </article>
+
+  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+          data-description="#theendismeow T-Shirt Pre-Order"
+          data-amount="4500"
+          data-locale="auto"></script>
+<% end %>
+  </form>
+</div>

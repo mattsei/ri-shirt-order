@@ -1,0 +1,93 @@
+<%= form_with url: @create_order_path, id: 'payment-form' do |f| %>
+
+<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+
+<%= f.text_field :name, id: "name", placeholder: "Your full name e.g. John Doe "%>
+  <%= f.email_field :email, data: {stripe: "email"}, placeholder: "e.g. john.doe@gmail.com" %>
+    <%= f.text_field :street_address, id: "street_address", placeholder: "Street address" %>
+    <%= f.text_field :city, id: "city", placeholder: "City" %>
+    <%= f.select :state, options_for_select([
+      ['ACT', 'ACT'],
+      ['NSW', 'NSW'],
+      ['NT', 'NT'],
+      ['QLD', 'QLD'],
+      ['SA', 'SA'],
+      ['TAS', 'TAS'],
+      ['VIC', 'VIC'],
+      ['WA', 'WA'],
+    ]), id: "state" %>
+    
+  <%= f.text_field :quantity, id: "quantity" %>
+  <%= f.select :size, options_for_select([
+      ['XS', 'XS'],
+      ['S', 'S'],
+      ['M', 'M'],
+      ['L', 'L'],
+      ['XL', 'XL'],
+      ['2XL', '2XL'],
+  ]), id: "size" %>
+<%= f.radio_button(:delivery, "Pickup", id: "delivery") %>
+<%= f.radio_button(:delivery, "Post", id: "delivery") %>
+  <div class="form-row">
+    <label for="card-element">
+      Credit or debit card
+    </label>
+    <div id="card-element">
+      <!-- A Stripe Element will be inserted here. -->
+    </div>
+
+    <!-- Used to display Element errors. -->
+    <div id="card-errors" role="alert"></div>
+  </div>
+
+  <%= f.submit "Submit Order" %>
+<% end %>
+<script>
+var stripe = Stripe('pk_test_Av4EGz2o1zlJ5bgifGjh0cVp');
+var elements = stripe.elements();
+
+var style = {
+  base: {
+    fontSize: '16px',
+    color: "#32325d",
+  }
+};
+
+var card = elements.create('card', {style: style});
+
+card.mount('#card-element');
+
+card.addEventListener('change', function(event) {
+  var displayError = document.getElementById('card-errors');
+  if (event.error) {
+    displayError.textContent = event.error.message;
+  } else {
+    displayError.textContent = '';
+  }
+});
+
+var form = document.getElementById('payment-form');
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  stripe.createToken(card).then(function(result) {
+    if (result.error) {
+      var errorElement = document.getElementById('card-errors');
+      errorElement.textContent = result.error.message;
+    } else {
+      stripeTokenHandler(result.token);
+    }
+  });
+});
+
+function stripeTokenHandler(token) {
+  var form = document.getElementById('payment-form');
+  var hiddenInput = document.createElement('input');
+  hiddenInput.setAttribute('type', 'hidden');
+  hiddenInput.setAttribute('name', 'stripeToken');
+  hiddenInput.setAttribute('value', token.id);
+  form.appendChild(hiddenInput);
+
+  form.submit();
+}
+</script>

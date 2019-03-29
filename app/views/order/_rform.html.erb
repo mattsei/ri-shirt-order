@@ -1,0 +1,40 @@
+<%= form_with url: @create_order_path, id: 'payment-form' do |f| %>
+  <span class="payment-errors"></span>
+  <%= f.fields_for :name do |nf| %>
+    <%= nf.text_field :first_name, placeholder: "First name" %>
+    <%= nf.text_field :last_name, placeholder: "Last name" %>
+  <% end %>
+  <%= f.email_field :email, data: {stripe: "email"}, placeholder: "e.g. john.doe@gmail.com" %>
+  <%= f.fields_for :address do |af| %>
+    <%= af.text_field :street_address, placeholder: "Street address" %>
+    <%= af.text_field :postcode, placeholder: "Postcode" %>
+    <%= af.text_field :city, placeholder: "City" %>
+    <%= af.select :state, options_for_select([
+      ['ACT', 1],
+      ['NSW', 2],
+      ['NT', 3],
+      ['QLD', 4],
+      ['SA', 5],
+      ['TAS', 6],
+      ['VIC', 7],
+      ['WA', 8]
+    ])%>
+  <% end%>
+  <%= f.number_field :quantity %>
+  <%= f.select :size, options_for_select([
+    ['XS', 1],
+    ['S', 1],
+    ['M', 1],
+    ['L', 1],
+    ['XL', 1],
+    ['2XL', 1],
+    ])%>
+  <%= f.fields_for :card_details do |cf| %>
+    <%= cf.text_field :number, data: { stripe: "number" }%>
+    <%= cf.text_field :cvc, data: { stripe: "cvc" }, size: '4'%>
+    <%= cf.text_field :exp_month, data: { stripe: "exp-month"}%>
+    <%= cf.text_field :exp_year, data: { stripe: "exp-year"}%>
+  <% end %>
+  <%= f.submit "Pay Now" %>
+
+<% end %>

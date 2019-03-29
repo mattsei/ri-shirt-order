@@ -1,0 +1,90 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+ @import "semantic-ui";
+
+ .responsive {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.Site {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.Site-container {
+  flex: 1;
+}
+
+.bg50b {
+  background-color: rgba(0, 0, 0, 0.75);
+  border: 1px solid black;
+  border-radius: 25px;
+  padding: 20px;
+  margin: 20px
+}
+
+body {
+  margin: 0%;
+  background-color: black;
+  background-image: url("../images/rl-bg-1-colored.png");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: 100vw;
+  background-attachment: fixed;
+}
+
+.ui.dividing.header {
+  color: white;
+}
+
+.ui.form .field > label {
+  color: white;
+}
+
+.ui.form > label {
+  color: white;
+}
+
+.ui.checkbox > label {
+  color: white;
+}
+
+.ui.checkbox > label:hover {
+  color: white;
+}
+
+.ui.checkbox > label:checked{
+  color: white;
+}
+
+.ui.checkbox > label:active {
+  color: white;
+}
+
+.ui.checkbox > label:focus {
+  color: white;
+}
+
+label {
+  color: white;
+}
