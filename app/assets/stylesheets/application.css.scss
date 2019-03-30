@@ -88,3 +88,8 @@ body {
 label {
   color: white;
 }
+
+.ui.form ::-moz-placeholder {
+  color: #777777;
+}
+

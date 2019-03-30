@@ -6,6 +6,8 @@ class OrderController < ApplicationController
 
   def new
   end
+
+
   
   def create
 
@@ -13,7 +15,13 @@ class OrderController < ApplicationController
 
     token = params[:stripeToken]
     @quantity = params[:quantity]
-    @total = @quantity.to_i * 4500
+    # @total = @quantity.to_i * 4500
+
+    if params[:delivery] == 'Post'
+      @total = @quantity.to_i * 5500
+    else
+      @total = @quantity.to_i * 4500
+    end
 
     # customer = Stripe::Customer.create({
     #   source: token,
