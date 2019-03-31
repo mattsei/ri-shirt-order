@@ -68,17 +68,25 @@
   </div>
   
   <%# <div class="form-row"> %>
-  <div id="card-number-element" class="field">
+  <div class="fields">
+  <div class="nine wide field">
+  <div id="card-number-element" class="">
   <input type="tel" name="cardnumber" placeholder="1234 1234 1234 1234">
   </div>
-  <div class="two fields">
-  <div id="card-expiry-element" class="field">
+  </div>
+  <%# <div class="two fields"> %>
+  <div class="four wide field">
+  <div id="card-expiry-element" class="">
   <input type="tel" name="cardexpiry" placeholder="MM / YY">
   </div>
-  <div id="card-cvc-element" class="field">
-  <input type="tel" name="cardcvc" placeholder="CVC">
+  </div>
+  <div class="three wide field">
+  <div id="card-cvc-element" class="">
+  <input type="tel" name="cardcvc" placeholder="CVC"> 
   </div>
   </div>
+  </div>
+  <%# </div> %>
     <%# <label for="card-element">
       Credit or debit card
     </label>
@@ -90,75 +98,32 @@
     <!-- Used to display Element errors. -->
     <div id="card-errors" role="alert"></div>
   <%# </div> %>
-
-  <%= f.submit "Submit Order" %>
+  <%= f.submit "Pay $#{number_to_currency(@total)}" %>
 <% end %>
 </div>
 <%# ############################################################################################### %>
 
 <script>
 var stripe = Stripe('pk_test_Av4EGz2o1zlJ5bgifGjh0cVp');
-// var elements = stripe.elements();
-
-// var style = {
-//   base: {
-//     fontSize: '16px',
-//     color: "#32325d",
-//   },
-  
-// };
-
-// var card = elements.create('card', {style: style});
-
-// card.mount('#card-element');
 
 // Custom Element Styling -------------------------------------------------------
-
 
   var elements = stripe.elements();
 
   var style = {
     base: {
       // iconColor: '#666EE8',
-      // color: '#31325F',
+      color: '#31325F',
       // lineHeight: '40px',
       // fontWeight: 300,
       // fontFamily: 'Helvetica Neue',
       // fontSize: '15px',
-
-      margin: 0em;
-      max-width: 100%;
-      -webkit-box-flex: 1;
-      -ms-flex: 1 0 auto;
-      flex: 1 0 auto;
-      outline: none;
-      -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-      text-align: left;
-      line-height: 1.21428571em;
-      font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
-      padding: 0.67857143em 1em;
-      background: #FFFFFF;
-      border: 1px solid rgba(34, 36, 38, 0.15);
-      color: rgba(0, 0, 0, 0.87);
-      border-radius: 0.28571429rem;
-      -webkit-transition: border-color 0.1s ease, -webkit-box-shadow 0.1s ease;
-      transition: border-color 0.1s ease, -webkit-box-shadow 0.1s ease;
-      transition: box-shadow 0.1s ease, border-color 0.1s ease;
-      transition: box-shadow 0.1s ease, border-color 0.1s ease, -webkit-box-shadow 0.1s ease;
-      -webkit-box-shadow: none;
-      box-shadow: none;
 
       '::placeholder': {
         color: '#CFD7E0',
       },
     },
   };
-
-  // var elementClasses = {
-  //   focus: 'focus',
-  //   empty: 'empty',
-  //   invalid: 'invalid',
-  // };
 
   var cardNumberElement = elements.create('cardNumber', {
     style: style
@@ -174,8 +139,6 @@ var stripe = Stripe('pk_test_Av4EGz2o1zlJ5bgifGjh0cVp');
     style: style
   });
   cardCvcElement.mount('#card-cvc-element');
-
-  // registerElements([cardNumber, cardExpiry, cardCvc], 'example3');
 
 // -------------------------------------------------------------------------------------------------
 
@@ -220,18 +183,16 @@ cardCvcElement.on('change', function(event) {
   stripe.createToken(cardNumberElement, options).then(setOutcome);
 });*/
 
-// -------------------------------------------------------------------------------------------
-
 //  DO NOT EDIT BELOW -----------------------------------------------------------
 
-// card.addEventListener('change', function(event) {
-//   var displayError = document.getElementById('card-errors');
-//   if (event.error) {
-//     displayError.textContent = event.error.message;
-//   } else {
-//     displayError.textContent = '';
-//   }
-// });
+cardNumberElement.addEventListener('change', function(event) {
+  var displayError = document.getElementById('card-errors');
+  if (event.error) {
+    displayError.textContent = event.error.message;
+  } else {
+    displayError.textContent = '';
+  }
+});
 
 var form = document.getElementById('payment-form');
 form.addEventListener('submit', function(event) {
@@ -258,15 +219,31 @@ function stripeTokenHandler(token) {
   form.submit();
 }
 
-// #############################################################
-
 </script>
-<script>
+
+<script> // Semantic UI Scripts
+
 $(document).ready(function(){
 
 $('.ui.radio.checkbox')
   .checkbox()
 ;
 
+$('.ui.form')
+  .form({
+    fields: {
+      name                : 'empty',
+      email               : ['email', 'empty'],
+      street_address      : 'empty',
+      city                : ['empty'],
+      quantity            : ['integer', 'empty'],
+      'card-number-element' : ['creditCard', 'empty'],
+      'card-expiry-element' : ['regExp[/(0[1-9]|10|11|12)\/[1-9]{2}$/gm]','empty'],
+      'card-cvc-element'    : ['maxLength[3]', 'empty'],
+    }
+  })
+;
+
 });
+
 </script>

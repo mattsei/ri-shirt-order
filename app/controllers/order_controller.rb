@@ -11,11 +11,10 @@ class OrderController < ApplicationController
   
   def create
 
-    Stripe.api_key = 'sk_test_cHcHo1NCkYbiJs8i54CeL7DL'
+    # Stripe.api_key = 'sk_test_cHcHo1NCkYbiJs8i54CeL7DL'
 
     token = params[:stripeToken]
     @quantity = params[:quantity]
-    # @total = @quantity.to_i * 4500
 
     if params[:delivery] == 'Post'
       @total = @quantity.to_i * 5500
@@ -23,16 +22,7 @@ class OrderController < ApplicationController
       @total = @quantity.to_i * 4500
     end
 
-    # customer = Stripe::Customer.create({
-    #   source: token,
-    #   email: params[:email],
-    #   description: params[:name],
-      
-    #   },
-    # })
-
     charge = Stripe::Charge.create({
-        # customer: customer.id,
         source: token,
         amount: @total,
         currency: 'aud',
@@ -48,17 +38,23 @@ class OrderController < ApplicationController
         },
         metadata: {
           name: params[:name],
+          email: params[:email],
           quantity: params[:quantity],
           size: params[:size],
           delivery: params[:delivery],
         },
     })
-      redirect_to order_created_path
+    
+    redirect_to order_created_path
 
+    rescue Stripe::CardError => e
+      flash[:error] = e.message
+      redirect_to new_order_path
+    end
     
   end  
 
   def show
   end
 
-end
+# end
