@@ -34,6 +34,7 @@ class OrderController < ApplicationController
             line1: params[:street_address],
             city: params[:city],
             state: params[:state],
+            postal_code: params[:postcode],
           },
         },
         metadata: {
@@ -49,7 +50,7 @@ class OrderController < ApplicationController
 
     rescue Stripe::CardError => e
       flash[:error] = e.message
-      redirect_to new_order_path
+      # redirect_to new_order_path
     end
     
   end  

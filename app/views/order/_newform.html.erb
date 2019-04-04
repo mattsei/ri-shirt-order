@@ -1,24 +1,28 @@
-<div class="eight wide column bg50b">
+<div class="bg50b">
 <%= form_with url: @create_order_path, id: 'payment-form', class: "ui form" do |f| %>
 
   <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-  <input type="hidden" name="token" />
+  <%# <input type="hidden" name="token" /> %>
   <div class="field">
   <%= f.label(:name, "Full Name") %>
-  <%= f.text_field :name, id: "name", placeholder: "e.g. John Doe "%>
+  <%= f.text_field :name, id: "name", placeholder: "e.g. John Doe ", required: true %>
   </div>
   <div class="field">
   <%= f.label(:email, "Email Address") %>
-  <%= f.email_field :email, data: {stripe: "email"}, placeholder: "e.g. john.doe@gmail.com" %>
+  <%= f.email_field :email, data: {stripe: "email"}, placeholder: "e.g. john.doe@gmail.com", required: true %>
   </div>
   <div class="field">
   <%= f.label(:street_address, "Street Address") %>
-  <%= f.text_field :street_address, id: "street_address", placeholder: "e.g. 123 First Street" %>
+  <%= f.text_field :street_address, id: "street_address", placeholder: "e.g. 123 First Street", required: true %>
   </div>
-  <div class="two fields">
+  <div class="three fields">
   <div class="field">
   <%= f.label(:city, "City") %>
-  <%= f.text_field :city, id: "city", placeholder: "e.g. Sydney" %>
+  <%= f.text_field :city, id: "city", placeholder: "e.g. Sydney", required: true %>
+  </div>
+  <div class="field">
+  <%= f.label(:postcode, "Postcode") %>
+  <%= f.telephone_field :postcode, id: "postcode", placeholder: "e.g. 2000", required: true, pattern: '\d{4}' %>
   </div>
   <div class="field">
   <%= f.label(:state, "State") %>
@@ -37,17 +41,17 @@
   <div class="two fields">
   <div class="field">
   <%= f.label(:quantity, "Shirt Quantity") %>
-  <%= f.text_field :quantity, id: "quantity", placeholder: "Minimum of 1" %>
+  <%= f.number_field :quantity, id: "quantity", placeholder: "Minimum of 1", required: true, min: "1" %>
   </div>
   <div class="field">
   <%= f.label(:size, "Size") %>
   <%= f.select :size, options_for_select([
-      ['XS', 'XS'],
       ['S', 'S'],
       ['M', 'M'],
       ['L', 'L'],
       ['XL', 'XL'],
       ['2XL', '2XL'],
+      ['3XL', '3XL'],
   ]), id: "size" %>
   </div>
   </div>
@@ -70,17 +74,20 @@
   <%# <div class="form-row"> %>
   <div class="fields">
   <div class="nine wide field">
+  <label for="card-number-element">Card Number</label>
   <div id="card-number-element" class="">
   <input type="tel" name="cardnumber" placeholder="1234 1234 1234 1234">
   </div>
   </div>
   <%# <div class="two fields"> %>
   <div class="four wide field">
+  <label for="card-expiry-element">Card Expiry</label>
   <div id="card-expiry-element" class="">
   <input type="tel" name="cardexpiry" placeholder="MM / YY">
   </div>
   </div>
   <div class="three wide field">
+  <label for="card-cvc-element">CVC</label>
   <div id="card-cvc-element" class="">
   <input type="tel" name="cardcvc" placeholder="CVC"> 
   </div>
@@ -96,154 +103,11 @@
     </div>
     </div> %>
     <!-- Used to display Element errors. -->
-    <div id="card-errors" role="alert"></div>
+    <div style="color:red;" id="card-errors" role="alert"></div>
   <%# </div> %>
-  <%= f.submit "Pay $#{number_to_currency(@total)}" %>
+  <p style="color:white;">Total: $<span id="result">0</span></p>
+  <%= f.submit "Pay Now" %>
 <% end %>
 </div>
+
 <%# ############################################################################################### %>
-
-<script>
-var stripe = Stripe('pk_test_Av4EGz2o1zlJ5bgifGjh0cVp');
-
-// Custom Element Styling -------------------------------------------------------
-
-  var elements = stripe.elements();
-
-  var style = {
-    base: {
-      // iconColor: '#666EE8',
-      color: '#31325F',
-      // lineHeight: '40px',
-      // fontWeight: 300,
-      // fontFamily: 'Helvetica Neue',
-      // fontSize: '15px',
-
-      '::placeholder': {
-        color: '#CFD7E0',
-      },
-    },
-  };
-
-  var cardNumberElement = elements.create('cardNumber', {
-    style: style
-  });
-  cardNumberElement.mount('#card-number-element');
-
-  var cardExpiryElement = elements.create('cardExpiry', {
-    style: style
-  });
-  cardExpiryElement.mount('#card-expiry-element');
-
-  var cardCvcElement = elements.create('cardCvc', {
-    style: style
-  });
-  cardCvcElement.mount('#card-cvc-element');
-
-// -------------------------------------------------------------------------------------------------
-
-  function setOutcome(result) {
-  var successElement = document.querySelector('.success');
-  var errorElement = document.querySelector('.error');
-  successElement.classList.remove('visible');
-  errorElement.classList.remove('visible');
-
-  if (result.token) {
-    // In this example, we're simply displaying the token
-    // successElement.querySelector('.token').textContent = result.token.id;
-    // successElement.classList.add('visible');
-
-    // In a real integration, you'd submit the form with the token to your backend server
-    var form = document.querySelector('form');
-    form.querySelector('input[name="token"]').setAttribute('value', result.token.id);
-    form.submit();
-  } else if (result.error) {
-    errorElement.textContent = result.error.message;
-    errorElement.classList.add('visible');
-  }
-}
-
-cardNumberElement.on('change', function(event) {
-  setOutcome(event);
-});
-
-cardExpiryElement.on('change', function(event) {
-  setOutcome(event);
-});
-
-cardCvcElement.on('change', function(event) {
-  setOutcome(event);
-});
-
-/*document.querySelector('form').addEventListener('submit', function(e) {
-  e.preventDefault();
-  var options = {
-    address_zip: document.getElementById('postal-code').value,
-  };
-  stripe.createToken(cardNumberElement, options).then(setOutcome);
-});*/
-
-//  DO NOT EDIT BELOW -----------------------------------------------------------
-
-cardNumberElement.addEventListener('change', function(event) {
-  var displayError = document.getElementById('card-errors');
-  if (event.error) {
-    displayError.textContent = event.error.message;
-  } else {
-    displayError.textContent = '';
-  }
-});
-
-var form = document.getElementById('payment-form');
-form.addEventListener('submit', function(event) {
-  event.preventDefault();
-
-  stripe.createToken(cardNumberElement).then(function(result) {
-    if (result.error) {
-      var errorElement = document.getElementById('card-errors');
-      errorElement.textContent = result.error.message;
-    } else {
-      stripeTokenHandler(result.token);
-    }
-  });
-});
-
-function stripeTokenHandler(token) {
-  var form = document.getElementById('payment-form');
-  var hiddenInput = document.createElement('input');
-  hiddenInput.setAttribute('type', 'hidden');
-  hiddenInput.setAttribute('name', 'stripeToken');
-  hiddenInput.setAttribute('value', token.id);
-  form.appendChild(hiddenInput);
-
-  form.submit();
-}
-
-</script>
-
-<script> // Semantic UI Scripts
-
-$(document).ready(function(){
-
-$('.ui.radio.checkbox')
-  .checkbox()
-;
-
-$('.ui.form')
-  .form({
-    fields: {
-      name                : 'empty',
-      email               : ['email', 'empty'],
-      street_address      : 'empty',
-      city                : ['empty'],
-      quantity            : ['integer', 'empty'],
-      'card-number-element' : ['creditCard', 'empty'],
-      'card-expiry-element' : ['regExp[/(0[1-9]|10|11|12)\/[1-9]{2}$/gm]','empty'],
-      'card-cvc-element'    : ['maxLength[3]', 'empty'],
-    }
-  })
-;
-
-});
-
-</script>

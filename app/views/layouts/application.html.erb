@@ -5,19 +5,25 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <%# <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" /> %>
-  <title>RiShirtOrder</title>
+  <title>#The End Is Meow</title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag    'application', media: 'all'%>
+  <%# <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'> %>
   <script src="https://js.stripe.com/v3/"></script>
+  <%= javascript_include_tag 'application' %>
+  
 </head>
 
-<body class="Site">
-  <main class="Site-container">
+<body class="">
+    <div id="stars1"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>
+  <main class="">
     <%= yield %>
+
+     <%= javascript_include_tag('elements.js') %>
   </main>
 </body>
 
