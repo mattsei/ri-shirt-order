@@ -1,14 +1,11 @@
+$(document).ready(function () {
+
 var stripe = Stripe('pk_test_Av4EGz2o1zlJ5bgifGjh0cVp');
 var elements = stripe.elements();
 
 var style = {
   base: {
-    // iconColor: '#666EE8',
     color: '#31325F',
-    // lineHeight: '40px',
-    // fontWeight: 300,
-    // fontFamily: 'Helvetica Neue',
-    // fontSize: '15px',
 
     '::placeholder': {
       color: '#CFD7E0',
@@ -76,14 +73,14 @@ cardCvcElement.on('change', function (event) {
 
 //  DO NOT EDIT BELOW -----------------------------------------------------------
 
-cardNumberElement.addEventListener('change', function (event) {
-  var displayError = document.getElementById('card-errors');
-  if (event.error) {
-    displayError.textContent = event.error.message;
-  } else {
-    displayError.textContent = '';
-  }
-});
+// cardNumberElement.addEventListener('change', function (event) {
+//   var displayError = document.getElementById('card-errors');
+//   if (event.error) {
+//     displayError.textContent = event.error.message;
+//   } else {
+//     displayError.textContent = '';
+//   }
+// });
 
 var form = document.getElementById('payment-form');
 form.addEventListener('submit', function (event) {
@@ -108,3 +105,5 @@ function stripeTokenHandler(token) {
   form.appendChild(hiddenInput);
   form.submit();
 }
+
+});
