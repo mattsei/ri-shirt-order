@@ -28,10 +28,8 @@ var cardCvcElement = elements.create('cardCvc', {
 });
 cardCvcElement.mount('#card-cvc-element');
 
-// -------------------------------------------------------------------------------------------------
-
 function setOutcome(result) {
-  var successElement = document.querySelector('.success');
+  var successElement = document.querySelector('.stripe-success');
   var errorElement = document.querySelector('.error');
   successElement.classList.remove('visible');
   errorElement.classList.remove('visible');
@@ -105,5 +103,12 @@ function stripeTokenHandler(token) {
   form.appendChild(hiddenInput);
   form.submit();
 }
+
+
+
+
+
+
+
 
 });

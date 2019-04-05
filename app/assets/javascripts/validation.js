@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  resetForms();
+  // resetForms();
 
   var quantity = document.getElementById('quantity');
   var postcode = document.getElementById('postcode');
