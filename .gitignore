@@ -21,7 +21,8 @@
 /storage/*
 !/storage/.keep
 
-/node_modules
+/node_modules/*
+!semantic-ui/
 /yarn-error.log
 
 /public/assets
