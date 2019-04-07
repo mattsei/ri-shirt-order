@@ -44,7 +44,7 @@
   <%= f.number_field :quantity, id: "quantity", placeholder: "Minimum of 1", required: true, min: "1" %>
   </div>
   <div class="field">
-  <%= f.label(:size, "Size") %>
+  <%= f.label(:size, "Size", class: "label-inherit") %>
   <%= f.select :size, options_for_select([
       ['S', 'S'],
       ['M', 'M'],
@@ -55,8 +55,10 @@
   ]), id: "size" %>
   </div>
   </div>
+  <a id="size-link" class="ui ra sub header" style="color:white;">Size Chart</a>
+
   <div class="grouped fields">
-  <label for="delivery" style="color:white;">Delivery Method</label><br>
+  <label for="delivery" style="color:white;">Delivery Method</label>
   <div class="field">
   <div class="ui radio checkbox">
   <%= f.label(:delivery, "Pickup") %>
@@ -101,5 +103,7 @@
   <%= f.submit "Pay Now" %>
 <% end %>
 </div>
+
+
 
 <%# ############################################################################################### %>

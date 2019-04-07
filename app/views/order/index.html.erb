@@ -1,14 +1,46 @@
-
 <div class="ui centered three column grid container">
 
 
-<div class="eight wide computer twelve wide tablet sixteen wide mobile column">
-  <%= image_tag("teim-header.png", class: 'responsive') %>
-  <%= image_tag("deadneko-web.png", class: 'vh80') %>
-  <div class="bg50b">
-  <p style="color:white;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut metus nisi, laoreet et eros et, condimentum sodales tellus. Donec tempor facilisis eros, a volutpat odio pharetra non. Mauris lacus nisi, molestie et congue a, sollicitudin nec justo. Pellentesque aliquet, est a porta euismod, dolor erat laoreet mauris, ac finibus lectus lectus id eros. Vivamus ullamcorper efficitur tellus at tristique. Vivamus ultrices id mauris sit amet dictum. Aenean sapien nulla, fringilla ut dolor at, consectetur viverra eros. Maecenas interdum, odio quis imperdiet pharetra, arcu arcu iaculis nibh, vel gravida nibh sapien vel mauris. Donec odio leo, facilisis quis nunc a, porta pretium turpis. Sed vulputate sem eget arcu ornare, sit amet accumsan ante porttitor. Nulla facilisi. Etiam lobortis neque urna, in sagittis urna tempus placerat. </p>
+  <div class="eight wide computer twelve wide tablet sixteen wide mobile column">
+    <%= image_tag("teim-header.png", class: 'responsive') %>
+    <%= image_tag("deadneko-web.png", class: 'vh80') %>
+    <div class="bg50c">
+      <h3>THE END IS MEOW AND TSHIRTS ARE LIMITED</h3>
+      <div class="ui horizontal inverted divider">
+      <i class="paw icon"></i>
+      </div>
+      <p>
+        Own your very own piece of wearable Neko Nation history with this #theendismeow tshirt featuring custom
+        never-to-be-seen-again graphics by legendary Neko Nation artist Rachillustration.<br>
+        <br>
+        Pre-order yours now for only $45 to secure a piece of Neko Nation history, 
+        available to be picked up at the final Neko Nation Sydney event on May 18th,
+        or for an additional $10 you can have yours posted direct to your door in the week following!<br>
+        <br>
+        With a range of sizes available, all printed on high quality and high comfort AS Colour shirts, you'd be crazy to miss out!
+      </p>
+    </div>
+    <div class="bg50c">
+    <a id="shirt"><%= image_tag("rl-shirt-web.png", class: 'rounded') %></a>
+    
+    <div class="ui modal" id="shirt-modal">
+      <%= image_tag("rl-shirt-web.png", class: 'responsive') %>
+    </div>
+    <div class="ui modal" id="size-modal">
+      <%= image_tag("size-guide.jpeg", class: 'responsive') %>
+    </div>
+    </div>
+    <%= render 'newform' %>
+    <div class="bg50c">
+    <i class="small inverted copyright outline icon"></i>
+    <strong class="ui sub header">Copyright BIOS Collective 2019</strong><br>
+    <strong class="ui sub header">Shirt design by rachillustration</strong><br>
+    <strong class="ui sub header">Website design and associated graphics by matt sei</strong><br>
+    <strong class="ui sub header">all payments processed securely by stripe</strong><br>
+    <a href="https://www.facebook.com/Rach.Illustration/"><i class="facebook link icon"></i></a>
+    <a href="https://github.com/mattsei"><i class="github link icon"></i></a>
+    <a href="https://stripe.com/"><i class="stripe link icon"></i></a>
+    </div>
   </div>
-  <%= render 'newform' %>
-</div>
 
 </div>

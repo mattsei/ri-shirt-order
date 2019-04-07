@@ -18,4 +18,22 @@ $(document).ready(function () {
       }
     });
 
+    $(function(){
+      $("#size-link").click(function(){
+        $("#size-modal").modal('show');
+      });
+      $("#size-modal").modal({
+        closable: true
+      });
+    });
+
+    $(function(){
+      $("#shirt").click(function(){
+        $("#shirt-modal").modal('show');
+      });
+      $("#shirt-modal").modal({
+        closable: true
+      });
+    });
+
 });
