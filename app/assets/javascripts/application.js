@@ -14,5 +14,5 @@
 //= require rails-ujs
 //= require activestorage
 //= require semantic-ui
-//= require_tree .
+//= require semantic
 

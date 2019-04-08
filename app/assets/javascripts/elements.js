@@ -1,4 +1,4 @@
-$(document).ready(function () {
+// $(document).ready(function () {
 
 var stripe = Stripe('pk_test_Av4EGz2o1zlJ5bgifGjh0cVp');
 var elements = stripe.elements();
@@ -110,5 +110,4 @@ function stripeTokenHandler(token) {
 
 
 
-
-});
+// });

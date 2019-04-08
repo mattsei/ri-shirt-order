@@ -74,24 +74,24 @@
   </div>
   
 
-  <%# <div class="fields"> %>
+  <div class="fields">
 
-  <%# <div class="nine wide field"> %>
+  <div class="nine wide field">
   <label for="card-number-element">Card Number</label>
   <div id="card-number-element"></div>
-  <%# </div> %>
+  </div>
 
-  <%# <div class="four wide field"> %>
+  <div class="four wide field">
   <label for="card-expiry-element">Card Expiry</label>
   <div id="card-expiry-element"></div>
-  <%# </div> %>
+  </div>
 
-  <%# <div class="three wide field"> %>
+  <div class="three wide field">
   <label for="card-cvc-element">CVC</label>
   <div id="card-cvc-element"></div>
-  <%# </div> %>
+  </div>
 
-  <%# </div> %>
+  </div>
 
   <%# <div style="color:red;" id="card-errors" role="alert"></div> %>
   <div class="outcome">
@@ -99,10 +99,17 @@
   <div class="stripe-success"></div>
   </div>
 
+<div class="cen">
   <h2 style="color:white;">Total: $<span id="result">0</span></h2>
   <%= f.submit "Pay Now" %>
+</div>
 <% end %>
 </div>
+
+    <%= javascript_include_tag('elements.js') %>     
+    <%= javascript_include_tag('validation.js') %>     
+
+
 
 
 
