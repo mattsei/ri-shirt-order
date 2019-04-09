@@ -1,113 +1,111 @@
 <div class="bg50b">
-<%= form_with url: @create_order_path, id: 'payment-form', class: "ui form" do |f| %>
+  <%= form_with url: @create_order_path, id: 'payment-form', class: "ui form" do |f| %>
 
   <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
   <input type="hidden" name="token" />
   <div class="field">
-  <%= f.label(:name, "Full Name") %>
-  <%= f.text_field :name, id: "name", placeholder: "e.g. John Doe ", required: true %>
+    <%= f.label(:name, "Full Name") %>
+    <%= f.text_field :name, id: "name", placeholder: "e.g. John Doe ", required: true %>
   </div>
   <div class="field">
-  <%= f.label(:email, "Email Address") %>
-  <%= f.email_field :email, data: {stripe: "email"}, placeholder: "e.g. john.doe@gmail.com", required: true %>
+    <%= f.label(:email, "Email Address") %>
+    <%= f.email_field :email, data: {stripe: "email"}, placeholder: "e.g. john.doe@gmail.com", required: true %>
   </div>
   <div class="field">
-  <%= f.label(:street_address, "Street Address") %>
-  <%= f.text_field :street_address, id: "street_address", placeholder: "e.g. 123 First Street", required: true %>
+    <%= f.label(:street_address, "Street Address") %>
+    <%= f.text_field :street_address, id: "street_address", placeholder: "e.g. 123 First Street", required: true %>
   </div>
   <div class="three fields">
-  <div class="field">
-  <%= f.label(:city, "City") %>
-  <%= f.text_field :city, id: "city", placeholder: "e.g. Sydney", required: true %>
-  </div>
-  <div class="field">
-  <%= f.label(:postcode, "Postcode") %>
-  <%= f.telephone_field :postcode, id: "postcode", placeholder: "e.g. 2000", required: true, pattern: '\d{4}' %>
-  </div>
-  <div class="field">
-  <%= f.label(:state, "State") %>
-  <%= f.select :state, options_for_select([
-      ['ACT', 'ACT'],
-      ['NSW', 'NSW'],
-      ['NT', 'NT'],
-      ['QLD', 'QLD'],
-      ['SA', 'SA'],
-      ['TAS', 'TAS'],
-      ['VIC', 'VIC'],
-      ['WA', 'WA'],
-  ]), id: "state", class: "ui selection dropdown" %>
-  </div>
+    <div class="field">
+      <%= f.label(:city, "City") %>
+      <%= f.text_field :city, id: "city", placeholder: "e.g. Sydney", required: true %>
+    </div>
+    <div class="field">
+      <%= f.label(:postcode, "Postcode") %>
+      <%= f.telephone_field :postcode, id: "postcode", placeholder: "e.g. 2000", required: true, pattern: '\d{4}' %>
+    </div>
+    <div class="field">
+      <%= f.label(:state, "State") %>
+      <%= f.select :state, options_for_select([
+        ['ACT', 'ACT'],
+        ['NSW', 'NSW'],
+        ['NT', 'NT'],
+        ['QLD', 'QLD'],
+        ['SA', 'SA'],
+        ['TAS', 'TAS'],
+        ['VIC', 'VIC'],
+        ['WA', 'WA'],
+      ]), id: "state", class: "ui selection dropdown" %>
+    </div>
   </div>
   <div class="two fields">
-  <div class="field">
-  <%= f.label(:quantity, "Shirt Quantity") %>
-  <%= f.number_field :quantity, id: "quantity", placeholder: "Minimum of 1", required: true, min: "1" %>
+    <div class="field">
+      <%= f.label(:quantity, "Shirt Quantity") %>
+      <%= f.number_field :quantity, id: "quantity", placeholder: "Minimum of 1", required: true, min: "1" %>
+    </div>
+    <div class="field">
+      <%= f.label(:size, "Size", class: "label-inherit") %>
+      <%= f.select :size, options_for_select([
+        ['S', 'S'],
+        ['M', 'M'],
+        ['L', 'L'],
+        ['XL', 'XL'],
+        ['2XL', '2XL'],
+        ['3XL', '3XL'],
+      ]), id: "size" %>
+    </div>
   </div>
-  <div class="field">
-  <%= f.label(:size, "Size", class: "label-inherit") %>
-  <%= f.select :size, options_for_select([
-      ['S', 'S'],
-      ['M', 'M'],
-      ['L', 'L'],
-      ['XL', 'XL'],
-      ['2XL', '2XL'],
-      ['3XL', '3XL'],
-  ]), id: "size" %>
-  </div>
-  </div>
+
   <a id="size-link" class="ui ra sub header" style="color:white;">Size Chart</a>
 
   <div class="grouped fields">
-  <label for="delivery" style="color:white;">Delivery Method</label>
-  <div class="field">
-  <div class="ui radio checkbox">
-  <%= f.label(:delivery, "Pickup") %>
-  <%= f.radio_button(:delivery, "Pickup", id: "delivery", checked: "checked") %>
+    <label for="delivery" style="color:white;">Delivery Method</label>
+    <div class="field">
+      <div class="ui radio checkbox">
+        <%= f.label(:delivery, "Pickup") %>
+        <%= f.radio_button(:delivery, "Pickup", id: "delivery", checked: "checked") %>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui radio checkbox">
+        <%= f.label(:delivery, "Post") %>
+        <%= f.radio_button(:delivery, "Post", id: "delivery") %>
+      </div>
+    </div>
   </div>
-  </div>
-  <div class="field">
-  <div class="ui radio checkbox">
-  <%= f.label(:delivery, "Post") %>
-  <%= f.radio_button(:delivery, "Post", id: "delivery") %>
-  </div>
-  </div>
-  </div>
-  
+
 
   <div class="fields">
+    <div class="nine wide field">
+      <label for="card-number-element">Card Number</label>
+      <div id="card-number-element"></div>
+    </div>
 
-  <div class="nine wide field">
-  <label for="card-number-element">Card Number</label>
-  <div id="card-number-element"></div>
+    <div class="four wide field">
+      <label for="card-expiry-element">Card Expiry</label>
+      <div id="card-expiry-element"></div>
+    </div>
+
+    <div class="three wide field">
+      <label for="card-cvc-element">CVC</label>
+      <div id="card-cvc-element"></div>
+    </div>
   </div>
 
-  <div class="four wide field">
-  <label for="card-expiry-element">Card Expiry</label>
-  <div id="card-expiry-element"></div>
-  </div>
-
-  <div class="three wide field">
-  <label for="card-cvc-element">CVC</label>
-  <div id="card-cvc-element"></div>
-  </div>
-
-  </div>
-
-  <%# <div style="color:red;" id="card-errors" role="alert"></div> %>
   <div class="outcome">
-  <div class="error" id="card-errors"></div>
-  <div class="stripe-success"></div>
+    <div class="error" id="card-errors"></div>
+    <div class="stripe-success"></div>
   </div>
 
-<div class="cen">
-  <h2 style="color:white;">Total: $<span id="result">0</span></h2>
-  <%= f.submit "Pay Now" %>
-</div>
-<% end %>
+  <div class="cen">
+    <h3>Total: $<span id="result">0</span></h3>
+    <%= f.submit "Pay Now", class: "ui button" %>
+  </div>
+  <% end %>
 </div>
 
-    <%= javascript_include_tag('elements.js') %>     
-    <%= javascript_include_tag('validation.js') %>     
+<%= javascript_include_tag('elements.js') %>
+<%= javascript_include_tag('validation.js') %>
 
 
 

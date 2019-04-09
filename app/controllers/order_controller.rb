@@ -1,17 +1,12 @@
 class OrderController < ApplicationController
 
-
   def index
   end
 
-  def new
-  end
-
-
+  # def new
+  # end
   
   def create
-
-    # Stripe.api_key = 'sk_test_cHcHo1NCkYbiJs8i54CeL7DL'
 
     token = params[:stripeToken]
     @quantity = params[:quantity]
@@ -50,14 +45,10 @@ class OrderController < ApplicationController
 
     rescue Stripe::CardError => e
       flash[:error] = e.message
-      redirect_to new_order_path
-    end
-    
-    
+      redirect_to order_index_path
+    end  
 
-  end  
-
-  def show
+  def created
   end
 
-# end
+end

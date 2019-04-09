@@ -3,6 +3,9 @@ $(document).ready(function () {
   $('.ui.radio.checkbox')
     .checkbox();
 
+  $('select.dropdown')
+    .dropdown();
+    
   $('.ui.form')
     .form({
       fields: {
