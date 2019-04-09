@@ -1,4 +1,3 @@
-// $(document).ready(function () {
 
 var stripe = Stripe('pk_live_TRjsMNBpszTbQ3yRMUrx44Ii00BVyTej4H');
 var elements = stripe.elements();
@@ -35,11 +34,6 @@ function setOutcome(result) {
   errorElement.classList.remove('visible');
 
   if (result.token) {
-    // In this example, we're simply displaying the token
-    // successElement.querySelector('.token').textContent = result.token.id;
-    // successElement.classList.add('visible');
-
-    // In a real integration, you'd submit the form with the token to your backend server
     var form = document.querySelector('form');
     form.querySelector('input[name="token"]').setAttribute('value', result.token.id);
     form.submit();
@@ -60,25 +54,6 @@ cardExpiryElement.on('change', function (event) {
 cardCvcElement.on('change', function (event) {
   setOutcome(event);
 });
-
-/*document.querySelector('form').addEventListener('submit', function(e) {
-  e.preventDefault();
-  var options = {
-    address_zip: document.getElementById('postal-code').value,
-  };
-  stripe.createToken(cardNumberElement, options).then(setOutcome);
-});*/
-
-//  DO NOT EDIT BELOW -----------------------------------------------------------
-
-// cardNumberElement.addEventListener('change', function (event) {
-//   var displayError = document.getElementById('card-errors');
-//   if (event.error) {
-//     displayError.textContent = event.error.message;
-//   } else {
-//     displayError.textContent = '';
-//   }
-// });
 
 var form = document.getElementById('payment-form');
 form.addEventListener('submit', function (event) {
