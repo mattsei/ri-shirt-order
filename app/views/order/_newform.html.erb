@@ -1,5 +1,5 @@
 <div class="bg50b">
-  <%= form_with url: @create_order_path, id: 'payment-form', class: "ui form" do |f| %>
+  <%= form_with url: @create_order_path, id: 'payment-form', class: "ui form", local: true do |f| %>
 
   <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
   <input type="hidden" name="token" />
