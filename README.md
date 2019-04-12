@@ -35,4 +35,4 @@ Payments are processed by Stripe via a custom Stripe Elements form, securely cap
 ## 3. Disclaimer
 '#The End Is Meow' artwork is the sole property of [Rachillustration](https://www.facebook.com/Rach.Illustration/). 
 All other artwork was designed by Matt Sei of [BIOS Collective](http://bioscollective.com/).
-Application was developed from scratch, tested, and deployed solely by Matt Sei.
+Application was developed from scratch, tested, deployed, and is actively maintained solely by Matt Sei.
