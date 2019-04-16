@@ -1,5 +1,7 @@
 
-var stripe = Stripe('pk_live_TRjsMNBpszTbQ3yRMUrx44Ii00BVyTej4H');
+// var stripe = Stripe('pk_test_Av4EGz2o1zlJ5bgifGjh0cVp');
+var public_key = document.querySelector("meta[name='stripe-public-key']").content;
+var stripe = Stripe(public_key);
 var elements = stripe.elements();
 
 var style = {
