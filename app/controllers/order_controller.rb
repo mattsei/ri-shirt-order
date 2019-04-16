@@ -23,21 +23,16 @@ class OrderController < ApplicationController
         currency: 'aud',
         description: '#TheEndIsMeow T-Shirt Pre-Order',
         receipt_email: params[:email],
-        shipping: {
-          name: params[:name],
-          address: {
-            line1: params[:street_address],
-            city: params[:city],
-            state: params[:state],
-            postal_code: params[:postcode],
-          },
-        },
         metadata: {
           name: params[:name],
           email: params[:email],
           quantity: params[:quantity],
           size: params[:size],
           delivery: params[:delivery],
+          address: params[:address],
+          city: params[:city],
+          state: params[:state],
+          postcode: params[:postcode],
         },
     })
     

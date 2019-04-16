@@ -11,7 +11,7 @@ $(document).ready(function () {
       fields: {
         name: ['empty'],
         email: ['email', 'empty'],
-        street_address: ['empty'],
+        address: ['empty'],
         city: ['empty'],
         postcode: ['number', 'exactLength[4]', 'empty'],
         quantity: ['integer', 'empty'],
